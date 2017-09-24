@@ -64,6 +64,12 @@ public class ToiletMap extends FragmentActivity implements OnMapReadyCallback,
         mMap = googleMap;
         mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 
+
+        MarkerOptions opts = new MarkerOptions();
+
+        opts.position(new LatLng(-37.806121499077804,144.95653844268273));
+        googleMap.addMarker(opts);
+
         //Initialize Google Play Services
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this,
@@ -77,6 +83,7 @@ public class ToiletMap extends FragmentActivity implements OnMapReadyCallback,
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
         }
+
     }
 
     protected synchronized void buildGoogleApiClient() {
