@@ -48,11 +48,13 @@ public class ToiletMap extends FragmentActivity implements OnMapReadyCallback,
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
-
+    // When map loads, these will run
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+
+        //List of all locations
 
         //MarkerOptions opts = new MarkerOptions();
 
@@ -216,7 +218,9 @@ public class ToiletMap extends FragmentActivity implements OnMapReadyCallback,
         //mMap.addMarker(new MarkerOptions().position(test2).title("actual name etc"));
 
         //LatLng test3 = new LatLng(-37.819795975740334,144.93766540530564);
-        //mMap.addMarker(new MarkerOptions().position(test3).title("so good at this"));
+        //mMap.addMarker(new MarkerOptions().position(test3).title("test again"));
+
+        //Google Play Service Initalization
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this,
@@ -267,6 +271,7 @@ public class ToiletMap extends FragmentActivity implements OnMapReadyCallback,
             mCurrLocationMarker.remove();
         }
 
+        //Current Location Marker
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
@@ -274,6 +279,7 @@ public class ToiletMap extends FragmentActivity implements OnMapReadyCallback,
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
         mCurrLocationMarker = mMap.addMarker(markerOptions);
 
+        //Moves camera to new current location marker
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(18));
         if (mGoogleApiClient != null) {
@@ -286,6 +292,7 @@ public class ToiletMap extends FragmentActivity implements OnMapReadyCallback,
     public void onConnectionFailed(ConnectionResult connectionResult) {
     }
 
+    //Asks user for permission to use location
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     public boolean checkLocationPermission(){
         if (ContextCompat.checkSelfPermission(this,
@@ -307,6 +314,8 @@ public class ToiletMap extends FragmentActivity implements OnMapReadyCallback,
         }
     }
 
+
+    //Actions for user response to location request
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
@@ -323,7 +332,7 @@ public class ToiletMap extends FragmentActivity implements OnMapReadyCallback,
                         mMap.setMyLocationEnabled(true);
                     }
                 } else {
-                    Toast.makeText(this, "permission denied", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Permission Denied", Toast.LENGTH_LONG).show();
                 }
                 return;
             }
